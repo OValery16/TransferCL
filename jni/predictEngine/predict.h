@@ -79,7 +79,7 @@ public:
 class PredictionModel{
 public:
 	EasyCL *cl;
-	PredictionModel();
+	PredictionModel(string absolutePath);
 	void makePredictions(int n,NeuralNet *net,float *inputData,ConfigPrediction config,ostream *outFile,int *labels,const long inputCubeSize, int N, GenericLoaderv2* loader);
 	void go(ConfigPrediction config);
 	void go0(ConfigPrediction config);

@@ -34,12 +34,13 @@ ConfigPrediction::ConfigPrediction() {
 
 }
 
-PredictionModel::PredictionModel(){
+PredictionModel::PredictionModel(string absolutePath){
 
 //    if(config.gpuIndex >= 0) {
 //        cl = EasyCL::createForIndexedGpu(config.gpuIndex);
 //    } else {
         cl = EasyCL::createForFirstGpuOtherwiseCpu();
+        cl->absolutePath=absolutePath;
 //    }
 
 }

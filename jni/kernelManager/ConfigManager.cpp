@@ -6,12 +6,11 @@
 using namespace std;
 
 
-ConfigManager::ConfigManager(){
-
+ConfigManager::ConfigManager(std::string fileDirectory){
 
 	string filepath="";
 	string line;
-	ifstream myfileI (kernellList);
+	ifstream myfileI (fileDirectory+"/binariesKernel/list.txt");
 	if (myfileI.is_open())
 	{
 	   while ( getline (myfileI,line) )
@@ -21,31 +20,13 @@ ConfigManager::ConfigManager(){
         }
     myfileI.close();
     }
-
-
-}
-
-
-ConfigManager::ConfigManager(std::string fileDirectory,string binaryFilesRepo){
-
-	string filepath="";
-	string line;
-	ifstream myfileI (fileDirectory);
-	if (myfileI.is_open())
-	{
-	   while ( getline (myfileI,line) )
-	   {
-		   vector<string> splitData=split(line, ",");
-		   listOfCompiledKernel.insert ({splitData[0],splitData[1]});
-        }
-    myfileI.close();
-    }
-	kernellList=fileDirectory;
-	binaryRepo=binaryFilesRepo;
+	kernellList=fileDirectory+"/binariesKernel/list.txt";
+	binaryRepo=fileDirectory+"/binariesKernel/";
 
 
 
 }
+
 
 
 

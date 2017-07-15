@@ -48,20 +48,21 @@ using namespace std;
 #include <fstream>
 
 
-#include "../sonyOpenCLexample1.h"
+#include "../TransferCL/src/dependencies.h"
 
 class ConfigManager{
 public:
 	std::unordered_map<std::string,std::string> listOfCompiledKernel;//configuration <--> kernel path
 	bool alreadyCompiledKernel(string kernelname, string option,string operation,string &filepath);
 	void addNewCompiledKernel(string kernelname, string options,string operation,string &filepath);
-	ConfigManager(std::string fileDirectory,string binaryFilesRepo);
-	ConfigManager();
+	//ConfigManager(std::string fileDirectory,string binaryFilesRepo);
+	ConfigManager(std::string fileDirectory);
+	//ConfigManager();
 private:
 
 
-	std::string binaryRepo="/data/data/com.sony.openclexample1/directoryTest/binariesKernel/";
-	std::string kernellList="/data/data/com.sony.openclexample1/directoryTest/binariesKernel/list.txt";
+	std::string binaryRepo="";///data/data/com.sony.openclexample1/directoryTest/binariesKernel/";
+	std::string kernellList="";//"/data/data/com.sony.openclexample1/directoryTest/binariesKernel/list.txt";
 
 };
 

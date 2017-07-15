@@ -60,6 +60,7 @@ using namespace std;
 class ConfigTraining {
 public:
 
+	string absolutePath;
 	string memory_map_file_label;
 	int nbLabelData;
 	string memory_map_file_data;
@@ -108,11 +109,11 @@ public:
 class TrainModel{
 public:
 	EasyCL *cl;
-	TrainModel();
+	TrainModel(string absolutePath);
 	void go(ConfigTraining config);
 	void printUsage(char *argv[], ConfigTraining config);
-	int trainCmd(std::string argument);
-	int prepareConfig(int parameterNb, char *argList[]);
+	int trainCmd(std::string argument,string absolutePath);
+	int prepareConfig(int parameterNb, char *argList[],string absolutePath);
 	int prepareFiles(string pathOriginalFile,int trainingExample, int inputChannel,string pathNewFileData,string pathNewFileLabel, string pathNormalizationFile);
 	void  data_normalization(float * trainData,int Ntrain,float* translate, float* scale, int inputCubeSize );
 	void  compare_two_binary_files(FILE *fp1, FILE *fp2);

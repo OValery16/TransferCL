@@ -120,12 +120,13 @@ string ConfigTraining::getOldTrainingString() {
         return configString;
     }
 
-TrainModel::TrainModel(){
+TrainModel::TrainModel(string absolutePath){
 
 //    if(config.gpuIndex >= 0) {
 //        cl = EasyCL::createForIndexedGpu(config.gpuIndex);
 //    } else {
         cl = EasyCL::createForFirstGpuOtherwiseCpu();
+        cl->absolutePath=absolutePath;
 //    }
 
 }
@@ -462,7 +463,7 @@ TrainModel::~TrainModel(){
     //delete cl;
 }
 
-int TrainModel::trainCmd(std::string argument){
+int TrainModel::trainCmd(std::string argument,string absolutePath){
 
     istringstream iss(argument);
     vector<string> tokens;
@@ -482,7 +483,7 @@ int TrainModel::trainCmd(std::string argument){
 	struct timeval start, end;
 	gettimeofday(&start, NULL);
 
-	int i=prepareConfig(tokens.size(), argList);
+	int i=prepareConfig(tokens.size(), argList,absolutePath);
 	gettimeofday(&end, NULL);
 
 	LOGI("All code took %f\n ms", (float)(((end.tv_sec * 1000000 + end.tv_usec)	- (start.tv_sec * 1000000 + start.tv_usec))/1000));
@@ -500,9 +501,11 @@ int TrainModel::trainCmd(std::string argument){
 }
 
 
-int TrainModel::prepareConfig(int parameterNb, char *argList[]) {
+int TrainModel::prepareConfig(int parameterNb, char *argList[],string absolutePath) {
+
 	ostringstream s1;
     ConfigTraining config;
+    config.absolutePath=absolutePath;
     if(parameterNb == 2 && (string(argList[1]) == "--help" || string(argList[1]) == "--?" || string(argList[1]) == "-?" || string(argList[1]) == "-h")) {
         printUsage(argList, config);
     }
