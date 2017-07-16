@@ -1,1 +1,1 @@
-![file architecture](/image/files.png | height=100)
+![file architecture]("/image/files.png" height="100")
