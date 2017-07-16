@@ -1,1 +1,1 @@
-![file architecture](/image/files.png?raw=true)
+![file architecture](/image/files.png?raw=true| height=100)
