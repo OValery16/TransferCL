@@ -1,1 +1,1 @@
-[[/image.pdf|ALT TEXT]]
+![file architecture](/images/files.png)
