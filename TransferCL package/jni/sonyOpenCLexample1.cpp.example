@@ -142,15 +142,15 @@ Java_com_sony_openclexample1_OpenCLActivity_training(JNIEnv* env, jclass clazz, 
 
 
 		LOGI("###############");
-	TrainModel* t= new TrainModel(path2);
+		TrainModel* t= new TrainModel(path2);
 
-	#if TRANSFER ==1
+
 		string filename_label="/data/data/com.sony.openclexample1/directoryTest/mem2Character2ManifestMapFileLabel2.raw";
 		string filename_data="/data/data/com.sony.openclexample1/directoryTest/mem2Character2ManifestMapFileData2.raw";
 		int imageSize=28;
 		int numOfChannel=1;//black and white => 1; color =>3
 		string storeweightsfile="/data/data/com.sony.openclexample1/directoryTest/weightstTransferedTEST.dat";
-		string loadweightsfile="/data/data/com.sony.openclexample1/directoryTest/weightstface1.dat";
+		string loadweightsfile="/data/data/com.sony.openclexample1/preloadingData/weightstface1.dat";
 		string loadnormalizationfile="/data/data/com.sony.openclexample1/directoryTest/normalizationTranfer.txt";
 		string networkDefinition="1s8c5z-relu-mp2-1s16c5z-relu-mp3-152n-tanh-10n";
 		int numepochs=100;
@@ -171,39 +171,6 @@ Java_com_sony_openclexample1_OpenCLActivity_training(JNIEnv* env, jclass clazz, 
 		cmdString=cmdString+" numtrain="+to_string(numtrain);
 		cmdString=cmdString+" learningrate="+to_string(learningRate);
 
-	#endif
-	#if TRANSFER ==0
-		string filename_label="/data/data/com.sony.openclexample1/memMapFileLabel60000MNIST.raw";
-		string filename_data="/data/data/com.sony.openclexample1/memMapFileData60000MNIST.raw";
-		int imageSize=28;
-		int numOfChannel=1;//black and white => 1; color =>3
-		string storeweightsfile="/data/data/com.sony.openclexample1/preloadingData/weightstTransferedTEST.dat";
-		string loadweightsfile="/data/data/com.sony.openclexample1/preloadingData/weightstface1.dat";
-		string loadnormalizationfile="/data/data/com.sony.openclexample1/preloadingData/normalization.txt";
-		string networkDefinition="1s8c5z-relu-mp2-1s16c5z-relu-mp3-152n-tanh-10n";
-		string validationSet="t10k-images-idx3-ubyte";
-		int numepochs=3;
-		int batchsize=100;//128;
-		int numtrain=60000;//59904;//
-		int numtest=10000;//9984;//
-		float learningRate=0.0001f;
-
-		string cmdString="train filename_label="+filename_label;
-		cmdString=cmdString+" filename_data="+filename_data;
-		cmdString=cmdString+" imageSize="+to_string(imageSize);
-		cmdString=cmdString+" numPlanes="+to_string(numOfChannel);
-		cmdString=cmdString+" storeweightsfile="+storeweightsfile;
-		cmdString=cmdString+" loadweightsfile="+loadweightsfile;
-		cmdString=cmdString+" loadnormalizationfile="+loadnormalizationfile;
-		cmdString=cmdString+" netdef="+networkDefinition;
-		cmdString=cmdString+" numepochs="+to_string(numepochs);
-		cmdString=cmdString+" batchsize="+to_string(batchsize);
-		cmdString=cmdString+" numtrain="+to_string(numtrain);
-		cmdString=cmdString+" numtest="+to_string(numtest);
-		cmdString=cmdString+" validatefile="+validationSet;
-		cmdString=cmdString+" learningrate="+to_string(learningRate);
-
-	#endif
 		LOGI("cmd %s",cmdString.c_str());
 		t->trainCmd(cmdString,path2);
 

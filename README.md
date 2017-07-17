@@ -183,7 +183,6 @@ Your repository should look like that:
 		I/TransferCL(11481): loss=0.497274 numRight=128
 		I/TransferCL(11481): loss=0.469449 numRight=128
 		I/TransferCL(11481): loss=0.444901 numRight=128
-		I/ActivityManager( 1618): type=1400 audit(0.0:1574): avc: denied { read } for name="task" dev="proc" ino=7190631 scontext=u:r:system_server:s0 tcontext=u:r:logd:s0 tclass=dir permissive=1
 		I/TransferCL(11481): loss=0.423074 numRight=128
 		I/TransferCL(11481): loss=0.403524 numRight=128
 		I/TransferCL(11481): loss=0.385904 numRight=128
