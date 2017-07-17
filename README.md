@@ -126,32 +126,21 @@ Your repository should look like that:
 '''
 * For example, the output of *prepareFiles(String path)* should look like that.
 
-		'''
+		```
 		I/TransferCL(11481): -------Files Preparation
-		
 		I/TransferCL(11481): -----------Generation of the memory-map files (binary files)
-		
 		I/TransferCL(11481): -------------- 128 images in the training set with 1 dimension and a image size of 28 X 28
-		
 		I/TransferCL(11481): -------------- Training set loading
-		
-		I/TransferCL(11481): -------------- training data file generation: 
-		
-		/data/data/com.sony.openclexample1/directoryTest/mem2Character2ManifestMapFileData2.raw
-		
+		I/TransferCL(11481): -------------- training data file generation: /data/data/com.sony.openclexample1/directoryTest/mem2Character2ManifestMapFileData2.raw
 		I/TransferCL(11481): -------------- label file generation: /data/data/com.sony.openclexample1/directoryTest/mem2Character2ManifestMapFileLabel2.raw
-		
 		I/TransferCL(11481): -------------- normalization file file generation: /data/data/com.sony.openclexample1/directoryTest/normalizationTranfer.txt
-		
 		I/TransferCL(11481): -------File generation: completed
-		
 		I/TransferCL(11481): easyCL oject destroyed
-		
-		'''
-		
+		```
+
 * For example, the output of *training(String path)* should look like that.
 
-'''
+```
 		I/TransferCL(11481): ################################################
 		I/TransferCL(11481): ###################Training#####################
 		I/TransferCL(11481): ################################################
@@ -287,9 +276,11 @@ Your repository should look like that:
 		I/TransferCL(11481):
 		I/TransferCL(11481): 4181.000000
 		I/TransferCL(11481):  ms
-'''
+```
+
 * For example, the output of *prediction(String path)* should look like that.
-'''
+
+```
 		I/TransferCL(11481): ################################################
 		I/TransferCL(11481): ###################Prediction###################
 		I/TransferCL(11481): ################################################
@@ -300,7 +291,7 @@ Your repository should look like that:
 		I/TransferCL(11481): --------- Prediction: done (prediction in /data/data/com.sony.openclexample1/preloadingData/pred2.txt)
 		I/TransferCL(11481): --------- End of ther prediction: Delete objects
 		I/TransferCL(11481): easyCL oject destroyed
-'''
+```
 
 
 
