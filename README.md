@@ -61,7 +61,7 @@ Your repository should look like that:
     * The name of the functions need to be modified in order to respect the naming convention for native function in NDK/JNI application: 'Java_{package_and_classname}_{function_name}(JNI arguments)'
         * For example the 'Java_com_sony_openclexample1_OpenCLActivity_training' means that this method is mapped to the 'training' method from the  'OpenCLActivity' activity in the 'com.sony.openclexample1' package.
         * For more information about this naming convention, please check this [website](https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html)
-* In the 'Android.mk', change the line 'LOCAL_SRC_FILES :=sonyOpenCLexample1.cpp' to 'LOCAL_SRC_FILES :={your_file_name}.cpp' (replace 'your_file_name' by the name of the file you just created)
+* In the 'Android.mk', change the line ```LOCAL_SRC_FILES :=sonyOpenCLexample1.cpp``` to ```LOCAL_SRC_FILES :={your_file_name}.cpp``` (replace 'your_file_name' by the name of the file you just created)
 * In the 'Application.mk' change the line 'APP_ABI := armeabi-v7a' to 'APP_ABI := {the_ABI_you_want_to_target}' (replace 'the_ABI_you_want_to_target' by the ABI you want to target)
     * A list of all supported ABIs are given on the [NDK website](https://developer.android.com/ndk/guides/abis.html).
     * Make sure that your device supports the chosen ABI (otherwise it won't be able to find TransferCL 's methods). If you are not certain, you can check, which ABIs are supported by your device, via some android applications like 'OpenCL-Z'.
@@ -97,7 +97,7 @@ Your repository should look like that:
 
 ## How to use it
 
-* In the template file ('sonyOpenCLexample1.cpp'), you can find three methods that have been already defined:
+* In the template file ('*sonyOpenCLexample1.cpp*'), you can find three methods that have been already defined:
     * *prepareFiles(String path)*
         * This method builds the training data set
         * Originally the training data set is stored on the microSD card as a set of jpeg images and a manifest file as defined on [DeepCL website in section 'jpegs'](https://github.com/hughperkins/DeepCL/blob/master/doc/Loaders.md)
@@ -121,7 +121,7 @@ Your repository should look like that:
 ## Case study
 
 
-* A case study is defined in 'sonyOpenCLexample1.cpp.example'
+* A case study is defined in '*sonyOpenCLexample1.cpp.example*'
 	1. We train a network (LeNet5) on the server with MNIST dataset (the training configuration is the standard one).
 	2. The final model is stored on the server in a binary file. 
 	3. This binary file is copied on the mobile device (for example, on the SD Card) .
