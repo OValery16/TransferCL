@@ -1,1 +1,1 @@
-![file architecture](/image/files.png?raw=true)
+![file architecture](/image/files2.png?raw=true)
