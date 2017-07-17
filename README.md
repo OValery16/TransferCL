@@ -1,6 +1,6 @@
 ## TransferCL
 
-TransferCL is an open source deep learning framework which has been designed to run on mobile devices.  The goal is to enable mobile devices to tackle complex deep learning oriented*problem heretofore reserved to desktop computers. This project has been initiated by the parallel and distributed processing laboratory at National Taiwan University. TransferCL is released under Mozilla Public Licence 2.0.
+TransferCL is an open source deep learning framework which has been designed to run on mobile devices.  The goal is to enable mobile devices to tackle complex deep learning oriented-problem heretofore reserved to desktop computers. This project has been initiated by the parallel and distributed processing laboratory at National Taiwan University. TransferCL is released under Mozilla Public Licence 2.0.
 
 ### Why TransferCL ?
 
@@ -117,6 +117,32 @@ Your repository should look like that:
 * Currently the most convenient way is to use [DeepCL Library](https://github.com/hughperkins/DeepCL) to train the first deep learning model on mobile.
     * However a conversion tool (TensorFlow model/TransferCL) is in preparation.
 * A more detailed tutorial is in preparation.
+
+## Case study
+
+
+* A case study is defined in 'sonyOpenCLexample1.cpp.example'
+	1. We train a network (LeNet5) on the server with MNIST dataset (the training configuration is the standard one).
+	2. The final model is stored on the server in a binary file. 
+	3. This binary file is copied on the mobile device (for example, on the SD Card) .
+	4. TransferCL creates a neural network, and initializes the weights of all layers except the last one with the weights of the pre-trained network. 
+	5. The last layer is initialized with a random number generator.
+	6. The training starts: TransferCL train the final layer from scratch, while leaving all the others untouched.
+		1. TransferCL performs the forward propagation
+		2. TransferCL performs the backward propagation and the weight update only on the last layer.
+	7. After very few iterations, the prediction error is relatively low.
+	8. We test our model prediction accuracy with a test dataset, which our model has never seen. In our case, TransferCL predict all test images label correctly.
+* To Conclude this case study, TransferCL trained on only about 12 images per class (a total of 10 classes) in a few seconds and predicted all test images correctly.
+
+## Important remark
+
+* The training images must cover sufficiently the scenarios that you want to predict. If the classifier sees fully new concepts or contexts, it is likely to perform badly. It applies in particular when leveraging transfer learning in a mobile device environment.
+
+    * If the training dataset only contains images from a constraint environment (say, indoor), the classifier won't be able to score images accurately from a different environment (outdoor).
+    * If the test images have widely different characteristics (illumination, background, color, size, position, etc), the classifier won't be able to perform very well.
+    * If a test image contains entirely new concepts, the classifier won't be able to identify its class.
+    
+* The choice of the base model to transfer to the mobile device is very important. The two classification tasks (the one on the server, and the one on the mobile device) should be related. For example, in our case study, the base network has been trained to recognize handwritten digits, and this knowledge is transferred to TransferCL in order to train a new network to classify handwritten characters on mobile devices.
 
 ## How to see the output 
 
@@ -294,7 +320,6 @@ Your repository should look like that:
 ```
 
 
-
 ## To get in contact
 
 Just create issues, in GitHub, in the top right of this page. Don't worry about whether you think your issue sounds silly or anything. The more feedback, the better!
@@ -302,7 +327,6 @@ Just create issues, in GitHub, in the top right of this page. Don't worry about 
 ## Contribute
 
 If you are interestered in this project, feel free to contact me.
-
 
 
 
