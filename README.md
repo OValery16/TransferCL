@@ -57,15 +57,15 @@ Your repository should look like that:
 ![file architecture](/image/files2.png?raw=true)
 
 * In the folder 'jni', create a '\*.cpp' file and a '&ast.h' file, which role is to interface with TranferCL. The android application will call this file's method to interact with the deep learning network.
-    * An example can be found in 'sonyOpenCLexample1.cpp'
-    * The name of the functions need to be modified in order to respect the naming convention for native function in NDK/JNI application: 'Java_{package_and_classname}_{function_name}(JNI arguments)'
-        * For example the 'Java_com_sony_openclexample1_OpenCLActivity_training' means that this method is mapped to the 'training' method from the  'OpenCLActivity' activity in the 'com.sony.openclexample1' package.
+    * An example can be found in '*sonyOpenCLexample1.cpp*'
+    * The name of the functions need to be modified in order to respect the naming convention for native function in NDK/JNI application: *Java_{package_and_classname}_{function_name}(JNI arguments)*
+        * For example the ```Java_com_sony_openclexample1_OpenCLActivity_training``` means that this method is mapped to the 'training' method from the  'OpenCLActivity' activity in the 'com.sony.openclexample1' package.
         * For more information about this naming convention, please check this [website](https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html)
 * In the 'Android.mk', change the line ```LOCAL_SRC_FILES :=sonyOpenCLexample1.cpp``` to ```LOCAL_SRC_FILES :={your_file_name}.cpp``` (replace 'your_file_name' by the name of the file you just created)
-* In the 'Application.mk' change the line 'APP_ABI := armeabi-v7a' to 'APP_ABI := {the_ABI_you_want_to_target}' (replace 'the_ABI_you_want_to_target' by the ABI you want to target)
+* In the 'Application.mk' change the line ```APP_ABI := armeabi-v7a``` to ```APP_ABI := {the_ABI_you_want_to_target}``` (replace 'the_ABI_you_want_to_target' by the ABI you want to target)
     * A list of all supported ABIs are given on the [NDK website](https://developer.android.com/ndk/guides/abis.html).
     * Make sure that your device supports the chosen ABI (otherwise it won't be able to find TransferCL 's methods). If you are not certain, you can check, which ABIs are supported by your device, via some android applications like 'OpenCL-Z'.
-* Run CrystaX  NDK to build your shared library with the command 'ndk-build' (crystax-ndk-X\ndk-build where X is CrystaX NDK version)
+* Run CrystaX  NDK to build your shared library with the command ```ndk-build``` (crystax-ndk-X\ndk-build where X is CrystaX NDK version)
 ```
 >ndk-build
 ```
