@@ -50,13 +50,13 @@ There are two ways to install TranferCL:
     
 * CrystaX NDK: 
     * [Google NDK](https://developer.android.com/ndk/index.html) provides a set of tools to build native applications on Android.  Our work is based on [CrystaX NDK](https://www.crystax.net/en), which has been developed as a drop-in replacement for Google NDK. For more information, please check their [website](https://www.crystax.net/en).
-    * It is still possible to use Google NDK, however, the user will need the import 'Boost C++' by itself.
+    * It is still possible to use Google NDK, however, the user will need the import 'Boost C++' by himself.
 	
-##### 3.1.1.1 Where to find the appropriated OpenCL shared-library
+###### 3.1.1.1 Where to find the appropriated OpenCL shared-library
 
-As mentioned previously, the installation of TransferCL requires the compatible libOpenCL.so library and the corresponding OpenCL headers:
-* The headers: the slimplest way is to from extract them from Adreno/Mali SDK. For Adreno SDK, they can be found at <Adreno_SDK>/Development/Inc/CL. For Mali SDK, they can be found at <MALI_SDK>/include/CL.
-* The ```libOpenCL.so```:  the library is generally already present on the mobile device and can be pull via ```adb pull /system/vendor/lib/libOpenCL.so ./```. (the path may change from one brand to another)
+As mentioned previously, the installation of TransferCL requires the compatible ```libOpenCL.so``` library and the corresponding OpenCL headers:
+* The headers: the simplest way is to from extracting them from Adreno/Mali SDK. For Adreno SDK, they can be found at <Adreno_SDK>/Development/Inc/CL. For Mali SDK, they can be found at <MALI_SDK>/include/CL.
+* The ```libOpenCL.so```:  the library is generally already present on the mobile device and can be pulled via ```adb pull /system/vendor/lib/libOpenCL.so ./```. (the path may change from one brand to another)
 
 
 ##### 3.1.2 Procedure
