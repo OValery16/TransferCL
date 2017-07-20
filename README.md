@@ -50,12 +50,12 @@ There are two ways to install TranferCL:
     
 * CrystaX NDK: 
     * [Google NDK](https://developer.android.com/ndk/index.html) provides a set of tools to build native applications on Android.  Our work is based on [CrystaX NDK](https://www.crystax.net/en), which has been developed as a drop-in replacement for Google NDK. For more information, please check their [website](https://www.crystax.net/en).
-    * It is still possible to use Google NDK, however, the user will need the import 'Boost C++' by himself.
+    * It is still possible to use Google NDK, however, the user will need the import ```Boost C++``` and ```libjpeg``` by himself.
 	
 ###### 3.1.1.1 Where to find the appropriated OpenCL shared-library
 
 As mentioned previously, the installation of TransferCL requires the compatible ```libOpenCL.so``` library and the corresponding OpenCL headers:
-* The headers: the simplest way is to from extracting them from Adreno/Mali SDK. For Adreno SDK, they can be found at <Adreno_SDK>/Development/Inc/CL. For Mali SDK, they can be found at <MALI_SDK>/include/CL.
+* The headers: the simplest way is to from extracting them from Adreno/Mali SDK. For Adreno SDK, they can be found at ```<Adreno_SDK>/Development/Inc/CL```. For Mali SDK, they can be found at ```<MALI_SDK>/include/CL```.
 * The ```libOpenCL.so```:  the library is generally already present on the mobile device and can be pulled via ```adb pull /system/vendor/lib/libOpenCL.so ./```. (the path may change from one brand to another)
 
 
@@ -147,8 +147,8 @@ In process
 	6. The training starts: TransferCL train the final layer from scratch, while leaving all the others untouched.
 		1. TransferCL performs the forward propagation
 		2. TransferCL performs the backward propagation and the weight update only on the last layer.
-	7. After very few iterations, the prediction error is relatively low.
-	8. We test our model prediction accuracy with a test dataset, which our model has never seen. In our case, TransferCL predict all test images label correctly.
+	7. After very few iterations, the prediction error drops significantly. All images' label are predicted correctly after only 11 iterations. (```loss=1.905059 numRight=128```)
+	8. We test our model prediction accuracy with a test dataset, which our model has never seen. In our expleriment, TransferCL predict all test images label correctly.
 * To Conclude this case study, TransferCL trained on only about 12 images per class (a total of 10 classes) in a few seconds and predicted all test images correctly.
 
 ## 6. Important remark
@@ -320,6 +320,7 @@ In process
 		I/TransferCL(11481): 3834.000000
 		I/TransferCL(11481):  ms
 ```
+	* After each iteration, TransferCL displays the loss value and the number of images' label correctly predicted. For example, ```loss=1.905059 numRight=128``` means that the loss is equal to 1.905059 and all images' label have been correctly predicted (we have only 128 images in the training dataset)
 
 * For example, the output of ```prediction(String path)``` should look like that.
 
