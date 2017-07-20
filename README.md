@@ -1,18 +1,18 @@
-## TransferCL
+## H1 TransferCL
 
 TransferCL is an open source deep learning framework which has been designed to run on mobile devices.  The goal is to enable mobile devices to tackle complex deep learning oriented-problem heretofore reserved to desktop computers. This project has been initiated by the parallel and distributed processing laboratory at National Taiwan University. TransferCL is released under Mozilla Public Licence 2.0.
 
-### Why TransferCL ?
+### 1. Why TransferCL ?
 
 Recent mobile devices are equipped with multiple sensors, which can give insight into the mobile users' profile.  We believe that such information can be used to customize the mobile experience for a specific user.
 
 The primary goal of TransferCL is to leverage Transfer Learning on mobile devices. Our work is based on the [DeepCL Library](https://github.com/hughperkins/DeepCL). Despite the similarity, TransferCL has been designed to run efficiently on a broad range of mobile devices. As a result, TransferCL implements its own memory management system and own OpenCL kernels in order take into account the specificity of mobile devices' System-on-Chip.
 
-### How does it work?
+### 2. How does it work?
 
 TransferCL has been implementing in C++ and is able to run on any Android device with an OpenCL compliant GPU (the vast majority of modern Android devices). TransferCL provides several APIs which allow programmers to transparency leverage deep learning on mobile devices.
 
-#### Transfer Learning
+#### 2.1 Transfer Learning
 
 Modern mobile devices suffer from two major issues that prevent them from training a deep neural network on mobile devices via a classic supervised learning approach. 
 
@@ -32,11 +32,17 @@ For more information, please check these websites:
 * [The class Convolutional Neural Networks for Visual Recognition at Stanford ](http://cs231n.github.io/transfer-learning/)
 * [A paper study of transfer learning performance](https://arxiv.org/abs/1411.1792)
 
-### Installation
+### 3. Installation
 
-#### Native Library installation
+There are two ways to install TranferCL: 
+1. From the source 
+* This method enables the developer to build TranferCL for any particular mobile device architecture. We recommend this approach.
+2. Importing TranferCL from our prebuilt directory
+* TransferCL has been pre-build for several commonly used hardware configurations. As a result, for these configurations, the shared-library can be imported directly in the android application. However, we emphasize that once built a shared-library is specific to a CPU ABI (armeabi-v7a, arm64-v8a ...) a GPU architecture (Adreno, Mali ...) and won't work for any other configurations than the one targeted initially.
 
-#### Pre-requisites
+#### 3.1 Building from source: Native Library installation
+
+##### 3.1.1 Pre-requisites
 
 * OpenCL compliant GPU, along with appropriate OpenCL driver:
     * The ```libOpenCL.so```, corresponding to the mobile device's GPU which is being targeting, need to to be placed in the folder ```extra_libs```.
@@ -46,7 +52,7 @@ For more information, please check these websites:
     * [Google NDK](https://developer.android.com/ndk/index.html) provides a set of tools to build native applications on Android.  Our work is based on [CrystaX NDK](https://www.crystax.net/en), which has been developed as a drop-in replacement for Google NDK. For more information, please check their [website](https://www.crystax.net/en).
     * It is still possible to use Google NDK, however, the user will need the import 'Boost C++' by itself.
 
-#### Procedure
+##### 3.1.2 Procedure
 
 * git clone https://github.com/OValery16/TransferCL.git
 * add your libOpenCL.so in the folder ```extra_libs```.
@@ -71,7 +77,7 @@ Your repository should look like that:
 ```
 * CrystaX NDK will output several shared library files (they are specific to your mobile device ABIs)
 
-#### Android application installation
+##### 3.1.3 Android application installation
 
 * Create your Android project.
 * Don't forget to respect the name conversion that you chose earlier (otherwise your application won't find your native methods)
@@ -95,7 +101,11 @@ Your repository should look like that:
 ```
 * Build your applications
 
-## How to use it
+#### 3.2 Installation from prebuild packages
+
+In process
+
+## H2 How to use it
 
 * In the template file (```sonyOpenCLexample1.cpp```), you can find three methods that have been already defined:
     * ```prepareFiles(String path)```
@@ -118,7 +128,7 @@ Your repository should look like that:
     * However a conversion tool (TensorFlow model/TransferCL) is in preparation.
 * A more detailed tutorial is in preparation.
 
-## Case study
+## 4. Case study
 
 
 * A case study is defined in ```sonyOpenCLexample1.cpp.example```
@@ -134,7 +144,7 @@ Your repository should look like that:
 	8. We test our model prediction accuracy with a test dataset, which our model has never seen. In our case, TransferCL predict all test images label correctly.
 * To Conclude this case study, TransferCL trained on only about 12 images per class (a total of 10 classes) in a few seconds and predicted all test images correctly.
 
-## Important remark
+## 5. Important remark
 
 * The training images must cover sufficiently the scenarios that you want to predict. If the classifier sees fully new concepts or contexts, it is likely to perform badly. It applies in particular when leveraging transfer learning in a mobile device environment.
 
@@ -144,7 +154,7 @@ Your repository should look like that:
     
 * The choice of the base model to transfer to the mobile device is very important. The two classification tasks (the one on the server, and the one on the mobile device) should be related. For example, in our case study, the base network has been trained to recognize handwritten digits, and this knowledge is transferred to TransferCL in order to train a new network to classify handwritten characters on mobile devices.
 
-## How to see the output 
+## 6. How to see the output 
 
 * In order to see the ouput of TranferCL, you can use the [logcat command-line tool](https://developer.android.com/studio/command-line/logcat.html):
 '''
@@ -320,11 +330,11 @@ Your repository should look like that:
 ```
 
 
-## To get in contact
+## 7. To get in contact
 
 Just create issues, in GitHub, in the top right of this page. Don't worry about whether you think your issue sounds silly or anything. The more feedback, the better!
 
-## Contribute
+## 8. Contribute
 
 If you are interestered in this project, feel free to contact me.
 
