@@ -1,4 +1,4 @@
-## H1 TransferCL
+## TransferCL
 
 TransferCL is an open source deep learning framework which has been designed to run on mobile devices.  The goal is to enable mobile devices to tackle complex deep learning oriented-problem heretofore reserved to desktop computers. This project has been initiated by the parallel and distributed processing laboratory at National Taiwan University. TransferCL is released under Mozilla Public Licence 2.0.
 
@@ -105,7 +105,7 @@ Your repository should look like that:
 
 In process
 
-## H2 How to use it
+## 4. How to use it
 
 * In the template file (```sonyOpenCLexample1.cpp```), you can find three methods that have been already defined:
     * ```prepareFiles(String path)```
@@ -128,7 +128,7 @@ In process
     * However a conversion tool (TensorFlow model/TransferCL) is in preparation.
 * A more detailed tutorial is in preparation.
 
-## 4. Case study
+## 5. Case study
 
 
 * A case study is defined in ```sonyOpenCLexample1.cpp.example```
@@ -144,7 +144,7 @@ In process
 	8. We test our model prediction accuracy with a test dataset, which our model has never seen. In our case, TransferCL predict all test images label correctly.
 * To Conclude this case study, TransferCL trained on only about 12 images per class (a total of 10 classes) in a few seconds and predicted all test images correctly.
 
-## 5. Important remark
+## 6. Important remark
 
 * The training images must cover sufficiently the scenarios that you want to predict. If the classifier sees fully new concepts or contexts, it is likely to perform badly. It applies in particular when leveraging transfer learning in a mobile device environment.
 
@@ -154,7 +154,7 @@ In process
     
 * The choice of the base model to transfer to the mobile device is very important. The two classification tasks (the one on the server, and the one on the mobile device) should be related. For example, in our case study, the base network has been trained to recognize handwritten digits, and this knowledge is transferred to TransferCL in order to train a new network to classify handwritten characters on mobile devices.
 
-## 6. How to see the output 
+## 7. How to see the output 
 
 * In order to see the ouput of TranferCL, you can use the [logcat command-line tool](https://developer.android.com/studio/command-line/logcat.html):
 '''
@@ -330,11 +330,11 @@ In process
 ```
 
 
-## 7. To get in contact
+## 8. To get in contact
 
 Just create issues, in GitHub, in the top right of this page. Don't worry about whether you think your issue sounds silly or anything. The more feedback, the better!
 
-## 8. Contribute
+## 9. Contribute
 
 If you are interestered in this project, feel free to contact me.
 
