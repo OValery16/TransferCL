@@ -332,7 +332,9 @@ Your repository should look like that:
 		I/TransferCL(11481): 3834.000000
 		I/TransferCL(11481):  ms
 ```
-	* After each iteration, TransferCL displays the loss value and the number of images' label correctly predicted. For example, ```loss=1.905059 numRight=128``` means that the loss is equal to 1.905059 and all images' label have been correctly predicted (we have only 128 images in the training dataset)
+
+	* After each iteration, TransferCL displays the loss value and the number of images' label correctly predicted. 
+		* For example, ```loss=1.905059 numRight=128``` means that the loss is equal to 1.905059 and all images' label have been correctly predicted (we have only 128 images in the training dataset)
 
 * For example, the output of ```prediction(String path)``` should look like that.
 
