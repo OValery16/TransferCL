@@ -28,6 +28,8 @@ LOCAL_SRC_FILES += $(notdir $(LOCAL_PATH)/)kernelManager/ConfigManager.cpp
 #$(notdir $(LOCAL_PATH)/DeepCL)/src/forcebackprop/ForceBackpropLayer.cpp $(notdir $(LOCAL_PATH)/DeepCL)/src/forcebackprop/ForceBackpropLayerMaker.cpp  
 LOCAL_LDLIBS 	:= -llog -ljnigraphics 
 LOCAL_SHARED_LIBRARIES := libjpegturboSIMD 
+#LOCAL_SHARED_LIBRARIES := libjpeg_shared
+ 
 
 LOCAL_CFLAGS += -fopenmp
 LOCAL_LDFLAGS += -fopenmp
@@ -35,10 +37,12 @@ LOCAL_LDFLAGS += -fopenmp
 LOCAL_LDLIBS := -ljnigraphics -llog -landroid
 LOCAL_C_INCLUDES += $(LOCAL_PATH) \
                     $(LOCAL_PATH)/libjpegturbo \
-                    $(LOCAL_PATH)/libjpegturbo/android                  
+                    $(LOCAL_PATH)/libjpegturbo/android             
 LOCAL_LDLIBS 	+= $(LOCAL_PATH_EXT)libOpenCL.so  
 
 LOCAL_STATIC_LIBRARIES :=boost_iostreams_static
+#LOCAL_STATIC_LIBRARIES += libjpeg-turbo
+#LOCAL_STATIC_LIBRARIES += libjpeg_static_no_neon
 # LOCAL_SHARED_LIBRARIES := libDeepCL libEasyCL
 
 LOCAL_LDLIBS 	:= -llog -ljnigraphics 
@@ -51,14 +55,15 @@ include $(CLEAR_VARS)
 
 LOCAL_ARM_MODE  := arm
 
-LOCAL_MODULE    := openclexample1
+LOCAL_MODULE    := transferCLNative
 
 LOCAL_CFLAGS 	+= -DANDROID_CL
 LOCAL_CFLAGS    += -O3 -ffast-math
 LOCAL_LDLIBS := -ljnigraphics -llog -landroid
 LOCAL_CFLAGS += -fopenmp
 LOCAL_LDFLAGS += -fopenmp
-LOCAL_SRC_FILES :=sonyOpenCLexample1.cpp
+LOCAL_SRC_FILES :=transferCLinterface.cpp
+#sonyOpenCLexample1.cpp
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include 
 LOCAL_STATIC_LIBRARIES :=transferCL
 LOCAL_LDLIBS 	+= $(LOCAL_PATH_EXT)libOpenCL.so  
@@ -66,3 +71,4 @@ LOCAL_LDLIBS 	+= $(LOCAL_PATH_EXT)libOpenCL.so
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,boost/1.57.0)
+$(call import-module,libjpeg/9a)

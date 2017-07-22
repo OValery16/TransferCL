@@ -36,11 +36,16 @@ For more information, please check these websites:
 
 There are two ways to install TranferCL: 
 1. From the source 
-* This method enables the developer to build TranferCL for any particular mobile device architecture. We recommend this approach.
+	* This method enables the developer to build TranferCL for any particular mobile device architecture. We recommend this approach.
 2. Importing TranferCL from our prebuilt directory
-* TransferCL has been pre-build for several commonly used hardware configurations. As a result, for these configurations, the shared-library can be imported directly in the android application. However, we emphasize that once built a shared-library is specific to a CPU ABI (armeabi-v7a, arm64-v8a ...) a GPU architecture (Adreno, Mali ...) and won't work for any other configurations than the one targeted initially.
+	* TransferCL has been pre-build for several commonly used hardware configurations. As a result, for these configurations, the shared-library can be imported directly in the android application. However, we emphasize that once built a shared-library is specific to a CPU ABI (armeabi-v7a, arm64-v8a ...) a GPU architecture (Adreno, Mali ...) and won't work for any other configurations than the one targeted initially.
 
-#### 3.1 Building from source: Native Library installation
+#### 3.1 Installation from prebuild packages
+
+* In the folder ```prebuild library```, you can find the binary files (to include in your android aplication) and the JavaWrapprer.
+* In this folder, the ```README``` file includes more details about their utilization.
+	
+#### 3.2 Building from source: Native Library installation
 
 ##### 3.1.1 Pre-requisites
 
@@ -50,13 +55,13 @@ There are two ways to install TranferCL:
     
 * CrystaX NDK: 
     * [Google NDK](https://developer.android.com/ndk/index.html) provides a set of tools to build native applications on Android.  Our work is based on [CrystaX NDK](https://www.crystax.net/en), which has been developed as a drop-in replacement for Google NDK. For more information, please check their [website](https://www.crystax.net/en).
-    * It is still possible to use Google NDK, however, the user will need the import ```Boost C++``` and ```libjpeg``` by himself.
+    * It is still possible to use Google NDK, however, the user will need the import ```Boost C++``` by himself.
 	
 ###### 3.1.1.1 Where to find the appropriated OpenCL shared-library
 
 As mentioned previously, the installation of TransferCL requires the compatible ```libOpenCL.so``` library and the corresponding OpenCL headers:
 * The headers: the simplest way is to from extracting them from Adreno/Mali SDK. For Adreno SDK, they can be found at ```<Adreno_SDK>/Development/Inc/CL```. For Mali SDK, they can be found at ```<MALI_SDK>/include/CL```.
-* The ```libOpenCL.so```:  the library is generally already present on the mobile device and can be pulled via ```adb pull /system/vendor/lib/libOpenCL.so ./```. (the path may change from one brand to another)
+* The ```libOpenCL.so```:  the library is generally already present on the mobile device and can be pulled via ```adb pull /system/vendor/lib/libOpenCL.so .```. (the path may change from one brand to another)
 
 
 ##### 3.1.2 Procedure
@@ -70,11 +75,11 @@ Your repository should look like that:
 ![file architecture](/image/files2.png?raw=true)
 
 * In the folder 'jni', create a ```\*.cpp``` file and a ```&ast.h``` file, which role is to interface with TranferCL. The android application will call this file's method to interact with the deep learning network.
-    * An example can be found in ```sonyOpenCLexample1.cpp```
+    * An example can be found in ```transferCLinterface.cpp```
     * The name of the functions need to be modified in order to respect the naming convention for native function in NDK/JNI application: ```Java_{package_and_classname}_{function_name}(JNI arguments)```
         * For example the ```Java_com_sony_openclexample1_OpenCLActivity_training``` means that this method is mapped to the ```training``` method from the  ```OpenCLActivity``` activity in the ```com.sony.openclexample1``` package.
         * For more information about this naming convention, please check this [website](https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaNativeInterface.html)
-* In the 'Android.mk', change the line ```LOCAL_SRC_FILES :=sonyOpenCLexample1.cpp``` to ```LOCAL_SRC_FILES :={your_file_name}.cpp``` (replace 'your_file_name' by the name of the file you just created)
+* In the 'Android.mk', change the line ```LOCAL_SRC_FILES :=transferCLinterface.cpp``` to ```LOCAL_SRC_FILES :={your_file_name}.cpp``` (replace 'your_file_name' by the name of the file you just created)
 * In the 'Application.mk' change the line ```APP_ABI := armeabi-v7a``` to ```APP_ABI := {the_ABI_you_want_to_target}``` (replace 'the_ABI_you_want_to_target' by the ABI you want to target)
     * A list of all supported ABIs are given on the [NDK website](https://developer.android.com/ndk/guides/abis.html).
     * Make sure that your device supports the chosen ABI (otherwise it won't be able to find TransferCL 's methods). If you are not certain, you can check, which ABIs are supported by your device, via some android applications like ```OpenCL-Z```.
@@ -108,14 +113,11 @@ Your repository should look like that:
 ```
 * Build your applications
 
-#### 3.2 Installation from prebuild packages
-
-In process
-
 ## 4. How to use it
 
-* In the template file (```sonyOpenCLexample1.cpp```), you can find three methods that have been already defined:
-    * ```prepareFiles(String path)```
+* In the folde ```prebuild library```, you can find a java wrapper for the native methods defined in TranferCL
+* In the file ```TransferCLlib.java``` , you can find three methods that have been already defined:
+    * ```prepareFiles(String path, String fileNameStoreData,String fileNameStoreLabel, String fileNameStoreNormalization, String manifestPath, int nbImage, int imagesChannelNb)```
         * This method builds the training data set
         * Originally the training data set is stored on the microSD card as a set of jpeg images and a manifest file as defined on [DeepCL website in the section 'jpegs'](https://github.com/hughperkins/DeepCL/blob/master/doc/Loaders.md)
             * In future versions of this tutorial, there will be some concrete examples.
@@ -123,12 +125,12 @@ In process
         * I also create the folder architecture on your mobile device to store pre-build OpenCL kernel.
             * If these folders are not created, the application will crash 
         * This method has to be the first to run.	
-    * ```training(String path)```
+    * ```training(String path, String cmdTrain);```
         * This method trains the new deep neural network. 
         * This method reuse the previously created files.
         * This method also build the OpenCL kernel the system need to train the deep neural network. 
-        * The parameters of the training methods are given in 'sonyOpenCLexample1.cpp'
-    * ```prediction(String path)```
+        * The parameters of the training methods are given in 'transferCLinterface.cpp'
+    * ```prediction(String path, String cmdPrediction)```
         * This method performs the inference task and store the result in a text file
 
 * Currently the most convenient way is to use [DeepCL Library](https://github.com/hughperkins/DeepCL) to train the first deep learning model on mobile.
@@ -138,17 +140,28 @@ In process
 ## 5. Case study
 
 
-* A case study is defined in ```sonyOpenCLexample1.cpp.example```
-	1. We train a network (LeNet5) on the server with MNIST dataset (the training configuration is the standard one).
-	2. The final model is stored on the server in a binary file. 
-	3. This binary file is copied on the mobile device (for example, on the SD Card) .
-	4. TransferCL creates a neural network, and initializes the weights of all layers except the last one with the weights of the pre-trained network. 
-	5. The last layer is initialized with a random number generator.
-	6. The training starts: TransferCL train the final layer from scratch, while leaving all the others untouched.
-		1. TransferCL performs the forward propagation
-		2. TransferCL performs the backward propagation and the weight update only on the last layer.
-	7. After very few iterations, the prediction error drops significantly. All images' label are predicted correctly after only 11 iterations. (```loss=1.905059 numRight=128```)
-	8. We test our model prediction accuracy with a test dataset, which our model has never seen. In our expleriment, TransferCL predict all test images label correctly.
+* A case study is in the folder ```case study```
+* In this folder, there 2 files:
+	* The Java wrapper file for the native methods defined in TranferCL
+	* The class "OpenCLActivity", which declares an Android Activity reusing the method defined in forementioned wrapper
+* The study case targets the following scenario:	
+	* Training on a server
+		1. We train a network (LeNet5) on the server with MNIST dataset (the training configuration is the standard one).
+		2. The final model is stored on the server in a binary file. 
+		3. This binary file is copied on the mobile device (for example, on the SD Card).
+	* Files preparations (```prepareFiles```)
+		1. We create the working directory ```directoryTest``` (perform at the native level by TransferCL)
+		2. The training files (the training file and their labels are respectively stored in one binary file) are generated
+		3. TransferCL analyse the dataset, stores its mean/stdDev and store them in one file
+	* Training on the mobile device (```training```)
+		1. TransferCL creates a neural network, and initializes the weights of all layers except the last one with the weights of the pre-trained network. 
+		2. The last layer is initialized with a random number generator.
+		3. The training starts: TransferCL train the final layer from scratch, while leaving all the others untouched.
+			1. TransferCL performs the forward propagation
+			2. TransferCL performs the backward propagation and the weight update only on the last layer.
+		4. After very few iterations, the prediction error drops significantly. All images' label are predicted correctly after only 11 iterations. (```loss=1.905059 numRight=128```)
+	* Test on the mobile device (```prediction```)
+		1. We test our model prediction accuracy with a test dataset, which our model has never seen. In our expleriment, TransferCL predict all test images label correctly.
 * To Conclude this case study, TransferCL trained on only about 12 images per class (a total of 10 classes) in a few seconds and predicted all test images correctly.
 
 ## 6. Important remark
