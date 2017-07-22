@@ -177,9 +177,8 @@ Your repository should look like that:
 ## 7. How to see the output 
 
 * In order to see the ouput of TranferCL, you can use the [logcat command-line tool](https://developer.android.com/studio/command-line/logcat.html):
-'''
->adb logcat ActivityManager:I TransferCL:D *:S
-'''
+	* ```>adb logcat ActivityManager:I TransferCL:D *:S```
+
 * For example, the output of ```prepareFiles(String path)``` should look like that.
 
 		```
