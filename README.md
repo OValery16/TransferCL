@@ -1,6 +1,6 @@
 ## TransferCL
 
-TransferCL is an open source deep learning framework which has been designed to run on mobile devices.  The goal is to enable mobile devices to tackle complex deep learning oriented-problem heretofore reserved to desktop computers. This project has been initiated by the parallel and distributed processing laboratory at National Taiwan University. TransferCL is released under Mozilla Public Licence 2.0.
+TransferCL is an open source deep learning framework which has been designed to run on mobile devices.  The goal is to enable mobile devices to tackle complex deep learning oriented-problem heretofore reserved to desktop computers. This project has been initiated by the parallel and distributed processing laboratory at [National Taiwan University](https://www.ntu.edu.tw). TransferCL is released under Mozilla Public Licence 2.0.
 
 ### 1. Why TransferCL ?
 
