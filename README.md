@@ -360,3 +360,6 @@ Just create issues (in GitHub) in the top right of this page. Don't worry about 
 ## 9. Contribute
 
 If you are interestered in this project, feel free to contact me.
+
+
+
