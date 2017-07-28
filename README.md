@@ -4,11 +4,10 @@ TransferCL
 Table of Contents
 =================
 
-* [TransferCL](#transfercl)
- * [1. Why TransferCL ?](#1-why-transfercl-)
- * [2. How does it work?](#2-how-does-it-work)
+* [1. Why TransferCL ?](#1-why-transfercl-)
+* [2. How does it work?](#2-how-does-it-work)
 	* [2.1 Transfer Learning](#21-transfer-learning)
- * [3. Installation](#3-installation)
+* [3. Installation](#3-installation)
 	* [3.1 Installation from prebuild packages](#31-installation-from-prebuild-packages)
 	* [3.2 Building from source: Native Library installation](#32-building-from-source-native-library-installation)
 	   * [3.1.1 Pre-requisites](#311-pre-requisites)
