@@ -115,7 +115,10 @@ Your repository should look like that:
 
 ## 4. How to use it
 
-* In the folder ```prebuild library```, you can find a java wrapper for the native methods defined in TranferCL.
+* In the folder ```study case```, you can find a template application  using TranferCL. This application defines 2 Java source package:
+	* ```com.transferCL```, which is a java wrapper for the native methods defined in TranferCL (```TransferCLlib.java```).
+	* ```com.example.myapplication```, which is an android activity (```MainActivity.java```). It calls  the methods declared in ```TransferCLlib.java```.
+* In the folder ```prebuild library```, you can also find the java wrapper file (```TransferCLlib.java```).
 * In the file ```TransferCLlib.java``` , you can find three methods that have been already defined:
     * ```prepareFiles(String path, String fileNameStoreData,String fileNameStoreLabel, String fileNameStoreNormalization, String manifestPath, int nbImage, int imagesChannelNb)```
         * This method builds the training data set.
@@ -135,16 +138,13 @@ Your repository should look like that:
 
 * Currently the most convenient way is to use [DeepCL Library](https://github.com/hughperkins/DeepCL) to train the first deep learning model on mobile.
     * However a conversion tool (TensorFlow model/TransferCL) is in development.
-* A more detailed tutorial is in development.
 
 ## 5. Case study
 
 
 * A case study is in the folder ```case study```
-* In this folder, there 2 files:
-	* The Java wrapper file for the native methods defined in TranferCL
-	* The class "OpenCLActivity", which declares an Android Activity reusing the method defined in forementioned wrapper
-* The study case targets the following scenario:	
+* In the folder ```study case```, you can find an application template using TranferCL.
+* The study case explores the following scenario:	
 	* Training on a server
 		1. We train a network (LeNet5) on the server with MNIST dataset (the training configuration is the standard one).
 		2. The final model is stored on the server in a binary file. 
