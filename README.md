@@ -144,6 +144,7 @@ Your repository should look like that:
 
 * A case study is in the folder ```case study```
 * In the folder ```study case```, you can find an application template using TranferCL.
+* You can also find a [tutorial](./case study/README.md).
 * The study case explores the following scenario:	
 	* Training on a server
 		1. We train a network (LeNet5) on the server with MNIST dataset (the training configuration is the standard one).
