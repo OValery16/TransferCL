@@ -1,5 +1,27 @@
 ## TransferCL
 
+### Table of Contents
+=================
+
+      * [TransferCL](#transfercl)
+         * [1. Why TransferCL ?](#1-why-transfercl-)
+         * [2. How does it work?](#2-how-does-it-work)
+            * [2.1 Transfer Learning](#21-transfer-learning)
+         * [3. Installation](#3-installation)
+            * [3.1 Installation from prebuild packages](#31-installation-from-prebuild-packages)
+            * [3.2 Building from source: Native Library installation](#32-building-from-source-native-library-installation)
+               * [3.1.1 Pre-requisites](#311-pre-requisites)
+                  * [3.1.1.1 Where to find the appropriated OpenCL shared-library](#3111-where-to-find-the-appropriated-opencl-shared-library)
+               * [3.1.2 Procedure](#312-procedure)
+               * [3.1.3 Android application installation](#313-android-application-installation)
+      * [4. How to use it](#4-how-to-use-it)
+      * [5. Case study](#5-case-study)
+      * [6. Important remarks](#6-important-remarks)
+      * [7. How to see the output](#7-how-to-see-the-output)
+      * [8. To get in contact](#8-to-get-in-contact)
+      * [9. Contribute](#9-contribute)
+
+
 TransferCL is an open source deep learning framework which has been designed to run on mobile devices.  The goal is to enable mobile devices to tackle complex deep learning oriented-problem reserved to desktop computers. This project has been initiated by the parallel and distributed processing laboratory at [National Taiwan University](https://www.ntu.edu.tw). TransferCL is released under Mozilla Public Licence 2.0.
 
 ### 1. Why TransferCL ?
