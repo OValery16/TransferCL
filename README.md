@@ -67,7 +67,7 @@ There are two ways to install TranferCL:
 #### 3.1 Installation from prebuild packages
 
 * In the folder ```prebuild library```, you can find the binary files (to include in your Android aplication) and the JavaWrapprer.
-* In this folder, the ```README``` file includes more details about their utilization.
+* In this folder, this [file](prebuild%20library/README.md) includes more details about their utilization.
 	
 #### 3.2 Building from source: Native Library installation
 

@@ -6,7 +6,7 @@
     * ```com.transferCL```, which is a java wrapper for the native methods defined in TranferCL (```TransferCLlib.java```).
     * ```com.example.myapplication```, which is an android activity (```MainActivity.java```). It calls the methods declared in ```TransferCLlib.java```.
 
-* We emphasize the fact that TranferCL's methods are declared directly in the android application, but the implementation of these methods are done at the native level. The TransferCL library needs to be built for a specific CPU architecture the user is targeting, such as armeabi-v7a,  and a specific brand of GPU, such as Adreno (Qualcomm).
+* We emphasize the fact that TranferCL's methods are declared directly in the android application, but the implementation of these methods is done at the native level. The TransferCL library needs to be built for a specific CPU architecture the user is targeting, such as armeabi-v7a,  and a specific brand of GPU, such as Adreno (Qualcomm).
     * In this [file](../README.md), the developer can find a guide relative the building process.
     * Once the shared-library is built, the developer needs to put the ```.so``` file in the ```jniLibs``` folder, as shown in the picture.
         * Important: 
