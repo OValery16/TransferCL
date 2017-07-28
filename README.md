@@ -4,7 +4,7 @@
 =================
 
       * [TransferCL](#transfercl)
-         * [1. Why TransferCL ?](#1-why-transfercl-)
+         * [1. Why TransferCL ?](#1.%20why%20transfercl%20?)
          * [2. How does it work?](#2-how-does-it-work)
             * [2.1 Transfer Learning](#21-transfer-learning)
          * [3. Installation](#3-installation)
