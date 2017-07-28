@@ -25,7 +25,7 @@
 ### 3. The application
 
 * This application is relatively simple, there are only three buttons (```prepare files```, ```training``` and ```prediction```) and one TextView that mirrors the adb logcat output.
-    * Files preparations (```prepare files```)
+* Files preparations (```prepare files```)
         1. We create the working directory ```directoryTest``` (perform at the native level by TransferCL)
         2. The training files (the training file and their labels are respectively stored in one binary file) are generated.
         3. TransferCL analyse the dataset, stores its mean/stdDev and store them in one file
