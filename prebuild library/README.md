@@ -10,7 +10,6 @@ Installation from prebuild packages
 ### 2. Installation	
 	
 * We emphasize the fact that TranferCL's methods are declared directly in the android application, but the implementation of these methods is done at the native level. The TransferCL library needs to be built for a specific CPU architecture the user is targeting, such as armeabi-v7a,  and a specific brand of GPU, such as Adreno (Qualcomm).
-    * In this [file](../README.md), the developer can find a guide relative the building process.
     * Once the shared-library is built, the developer needs to put the ```.so``` file in the ```jniLibs``` folder, as shown in the picture (```case study/android application/MyApplication/```).
         * Important: 
             1. In the given an example (on the picture), TranferCL has been compiled for ```armeabi``` architecture. The building process will output a ```armeabi``` folder with two files ```libcrystax.so``` and ```libtransferCLNative.so```. This folder needs to be copied in the ```jniLibs```.
