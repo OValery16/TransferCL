@@ -15,7 +15,7 @@
 			3. A list of all supported ABIs is given on the [NDK website](https://developer.android.com/ndk/guides/abis.html). 
 	
 	
-![file architecture](/image/jniLibs.PNG.png?raw=true)
+![file architecture](/image/jniLibs.PNG?raw=true)
 
 ### 2. Hardware requirements
 
@@ -30,13 +30,13 @@
 		2. The training files (the training file and their labels are respectively stored in one binary file) are generated.
 		3. TransferCL analyse the dataset, stores its mean/stdDev and store them in one file
 
-![file architecture](/image/training1.PNG.png?raw=true)		
+![file architecture](/image/training1.png?raw=true)		
 	
-![file architecture](/image/training2.PNG.png?raw=true)		
+![file architecture](/image/training2.png?raw=true)		
 
-![file architecture](/image/training3.PNG.png?raw=true)		
+![file architecture](/image/training3.png?raw=true)		
 
-![file architecture](/image/training4.PNG.png?raw=true)	
+![file architecture](/image/training4.png?raw=true)	
 		
 	* Training on the mobile device (```training```)
 		1. TransferCL creates a neural network, and initializes the weights of all layers except the last one with the weights of the pre-trained network. 
@@ -46,7 +46,7 @@
 			2. TransferCL performs the backward propagation and the weight update only on the last layer.
 		4. After very few iterations, the prediction error drops significantly. All images' label are predicted correctly after only 11 iterations. (```loss=1.905059 numRight=128```)
 		
-![file architecture](/image/prediction.PNG.png?raw=true)				
+![file architecture](/image/prediction.png?raw=true)				
 		
 	* Test on the mobile device (```prediction```)
 		1. We tested our model prediction accuracy with a test dataset, which our model has never seen. In our expleriment, TransferCL predicted all test images label correctly.
