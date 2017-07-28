@@ -32,7 +32,7 @@
 
 ![file architecture](/image/filePreparation.png?raw=true)    
         
-    * Training on the mobile device (```training```)
+* Training on the mobile device (```training```)
         1. TransferCL creates a neural network, and initializes the weights of all layers except the last one with the weights of the pre-trained network. 
         2. The last layer is initialized with a random number generator.
         3. The training starts: TransferCL train the final layer from scratch, while leaving all the others untouched.
@@ -48,6 +48,7 @@
 
 ![file architecture](/image/training4.png?raw=true)        
         
-    * Test on the mobile device (```prediction```)
+* Test on the mobile device (```prediction```)
         1. We tested our model prediction accuracy with a test dataset, which our model has never seen. In our expleriment, TransferCL predicted all test images label correctly.
+		
 ![file architecture](/image/prediction.png?raw=true)        
