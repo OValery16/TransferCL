@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String fileNameStoreLabel= "/data/data/"+applicationName+"/directoryTest/mem2Character2ManifestMapFileLabel2.raw";
                 String fileNameStoreNormalization="/data/data/"+applicationName+"/directoryTest/normalizationTranfer.txt";
 
-                t.prepareFiles("/data/data/"+applicationName+"/", fileNameStoreData,fileNameStoreLabel, fileNameStoreNormalization,"/sdcard1/character/manifest6.txt",128, 1);
+                t.prepareFiles("/data/data/"+applicationName+"/", fileNameStoreData,fileNameStoreLabel, fileNameStoreNormalization,"/sdcard1/character2/manifest6.txt",128, 1);
 
             }
         };

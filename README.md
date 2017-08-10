@@ -130,9 +130,9 @@ Your repository should look like that:
 * Define the methods that have been implemented natively (in the shared library) as in the example
 ```
     //the name need to be the same as the one defined in the shared library
-    public static native int training(String path); 
-    public static native int prediction(String path);
-    public static native int prepareFiles(String path);
+    public static native int training(String path, String cmdTrain);
+    public static native int prediction(String path, String cmdPrediction);
+    public static native int prepareFiles(String path, String fileNameStoreData,String fileNameStoreLabel, String fileNameStoreNormalization, String manifestPath, int nbImage, int imagesChannelNb);
 ```
 * Build your applications
 
@@ -183,7 +183,7 @@ Your repository should look like that:
 		3. The training starts: TransferCL train the final layer from scratch, while leaving all the others untouched.
 			1. TransferCL performs the forward propagation.
 			2. TransferCL performs the backward propagation and the weight update only on the last layer.
-		4. After very few iterations, the prediction error drops significantly. All images' label are predicted correctly after only 11 iterations. (```loss=1.905059 numRight=128```)
+		4. After very few iterations, the prediction error drops significantly. Most images' label are predicted correctly after only 20 iterations. (```loss=98.937355 numRight=118```)
 	* Test on the mobile device (```prediction```)
 		1. We tested our model prediction accuracy with a test dataset, which our model has never seen. In our expleriment, TransferCL predicted all test images label correctly.
 * To Conclude this case study, TransferCL trained on only about 12 images per class (a total of 10 classes) in a few seconds and predicted all test images correctly.
@@ -203,179 +203,274 @@ Your repository should look like that:
 * In order to see the ouput of TranferCL, you can use the [logcat command-line tool](https://developer.android.com/studio/command-line/logcat.html):
 	* ```>adb logcat ActivityManager:I TransferCL:D *:S```
 
-* For example, the output of ```prepareFiles(String path)``` should look like that.
+* For example, the output of ```prepareFiles(String path, String fileNameStoreData,String fileNameStoreLabel, String fileNameStoreNormalization, String manifestPath, int nbImage, int imagesChannelNb)``` should look like that.
 
 ```
-I/TransferCL(11481): -------Files Preparation
-I/TransferCL(11481): -----------Generation of the memory-map files (binary files)
-I/TransferCL(11481): -------------- 128 images in the training set with 1 dimension and a image size of 28 X 28
-I/TransferCL(11481): -------------- Training set loading
-I/TransferCL(11481): -------------- training data file generation: /data/data/com.sony.openclexample1/directoryTest/mem2Character2ManifestMapFileData2.raw
-I/TransferCL(11481): -------------- label file generation: /data/data/com.sony.openclexample1/directoryTest/mem2Character2ManifestMapFileLabel2.raw
-I/TransferCL(11481): -------------- normalization file file generation: /data/data/com.sony.openclexample1/directoryTest/normalizationTranfer.txt
-I/TransferCL(11481): -------File generation: completed
-I/TransferCL(11481): easyCL oject destroyed
+I/TransferCL(10924): -------Files Preparation
+I/TransferCL(10924): -----------Generation of the memory-map files (binary files)
+I/TransferCL(10924): -------------- 128 images in the training set with 1 dimension and a image size of 28 X 28
+I/TransferCL(10924): -------------- Training set loading
+I/TransferCL(10924): -------------- training data file generation: /data/data/com.sony.openclexample1/directoryTest/mem2Character2ManifestMapFileData2.raw
+I/TransferCL(10924): -------------- label file generation: /data/data/com.sony.openclexample1/directoryTest/mem2Character2ManifestMapFileLabel2.raw
+I/TransferCL(10924): -------------- normalization file file generation: /data/data/com.sony.openclexample1/directoryTest/normalizationTranfer.txt
+I/TransferCL(10924): -------File generation: completed
+I/TransferCL(10924): easyCL oject destroyed
 ```
 
-* For example, the output of ```training(String path)``` should look like that.
+* For example, the output of ```training(String path, String cmdTrain);``` should look like that.
 	* After each iteration, TransferCL displays the loss value and the number of images' label correctly predicted. 
-		* For example, ```loss=1.905059 numRight=128``` means that the loss is equal to 1.905059 and all images' label have been correctly predicted (we have only 128 images in the training dataset)
+		* For example, ```loss=98.937355 numRight=118``` means that the loss is equal to 98.937355 and 118 images' label have been correctly predicted (we have only 128 images in the training dataset)
 		
 ```
-I/TransferCL(11481): ################################################
-I/TransferCL(11481): ###################Training#####################
-I/TransferCL(11481): ################################################
-I/TransferCL(11481): ------- Loading configuration: training set 128 images with 1 channel and an image size of 28 X 28
-I/TransferCL(11481): ------- Network Generation: 1s8c5z-relu-mp2-1s16c5z-relu-mp3-152n-tanh-10n
-I/TransferCL(11481): -----------Define Weights Initialization Method
-I/TransferCL(11481): -------------- Chosen Initializer: original
-I/TransferCL(11481): -----------Network Layer Generation
-I/TransferCL(11481): -----------Selecting Training method (sgd)
-I/TransferCL(11481): -----------Loading the weights (the othe weights are radomly initialized with the initializer defined previously)
-I/TransferCL(11481): -----------Set up Trainer
-I/TransferCL(11481):
-I/TransferCL(11481):
-I/TransferCL(11481): ################################################
-I/TransferCL(11481): ################Start learning##################
-I/TransferCL(11481): ################################################
-I/TransferCL(11481):
-I/TransferCL(11481):
-I/TransferCL(11481): loss=339.530243 numRight=7
-I/TransferCL(11481): loss=103.915398 numRight=100
-I/TransferCL(11481): loss=736.500610 numRight=64
-I/TransferCL(11481): loss=1662.703247 numRight=64
-I/TransferCL(11481): loss=68.743599 numRight=115
-I/TransferCL(11481): loss=19.016699 numRight=125
-I/TransferCL(11481): loss=11.302835 numRight=125
-I/TransferCL(11481): loss=6.223648 numRight=125
-I/TransferCL(11481): loss=4.286274 numRight=126
-I/TransferCL(11481): loss=2.810870 numRight=127
-I/TransferCL(11481): loss=1.905059 numRight=128
-I/TransferCL(11481): loss=1.448894 numRight=128
-I/TransferCL(11481): loss=1.189890 numRight=128
-I/TransferCL(11481): loss=1.017845 numRight=128
-I/TransferCL(11481): loss=0.892899 numRight=128
-I/TransferCL(11481): loss=0.797294 numRight=128
-I/TransferCL(11481): loss=0.721556 numRight=128
-I/TransferCL(11481): loss=0.659997 numRight=128
-I/TransferCL(11481): loss=0.608945 numRight=128
-I/TransferCL(11481): loss=0.565904 numRight=128
-I/TransferCL(11481): loss=0.529109 numRight=128
-I/TransferCL(11481): loss=0.497274 numRight=128
-I/TransferCL(11481): loss=0.469449 numRight=128
-I/TransferCL(11481): loss=0.444901 numRight=128
-I/TransferCL(11481): loss=0.423074 numRight=128
-I/TransferCL(11481): loss=0.403524 numRight=128
-I/TransferCL(11481): loss=0.385904 numRight=128
-I/TransferCL(11481): loss=0.369931 numRight=128
-I/TransferCL(11481): loss=0.355375 numRight=128
-I/TransferCL(11481): loss=0.342049 numRight=128
-I/TransferCL(11481): loss=0.329797 numRight=128
-I/TransferCL(11481): loss=0.318488 numRight=128
-I/TransferCL(11481): loss=0.308013 numRight=128
-I/TransferCL(11481): loss=0.298278 numRight=128
-I/TransferCL(11481): loss=0.289205 numRight=128
-I/TransferCL(11481): loss=0.280725 numRight=128
-I/TransferCL(11481): loss=0.272778 numRight=128
-I/TransferCL(11481): loss=0.265314 numRight=128
-I/TransferCL(11481): loss=0.258288 numRight=128
-I/TransferCL(11481): loss=0.251661 numRight=128
-I/TransferCL(11481): loss=0.245398 numRight=128
-I/TransferCL(11481): loss=0.239468 numRight=128
-I/TransferCL(11481): loss=0.233845 numRight=128
-I/TransferCL(11481): loss=0.228503 numRight=128
-I/TransferCL(11481): loss=0.223422 numRight=128
-I/TransferCL(11481): loss=0.218584 numRight=128
-I/TransferCL(11481): loss=0.213968 numRight=128
-I/TransferCL(11481): loss=0.209559 numRight=128
-I/TransferCL(11481): loss=0.205345 numRight=128
-I/TransferCL(11481): loss=0.201312 numRight=128
-I/TransferCL(11481): loss=0.197446 numRight=128
-I/TransferCL(11481): loss=0.193739 numRight=128
-I/TransferCL(11481): loss=0.190181 numRight=128
-I/TransferCL(11481): loss=0.186761 numRight=128
-I/TransferCL(11481): loss=0.183472 numRight=128
-I/TransferCL(11481): loss=0.180306 numRight=128
-I/TransferCL(11481): loss=0.177256 numRight=128
-I/TransferCL(11481): loss=0.174317 numRight=128
-I/TransferCL(11481): loss=0.171480 numRight=128
-I/TransferCL(11481): loss=0.168741 numRight=128
-I/TransferCL(11481): loss=0.166096 numRight=128
-I/TransferCL(11481): loss=0.163539 numRight=128
-I/TransferCL(11481): loss=0.161066 numRight=128
-I/TransferCL(11481): loss=0.158672 numRight=128
-I/TransferCL(11481): loss=0.156354 numRight=128
-I/TransferCL(11481): loss=0.154107 numRight=128
-I/TransferCL(11481): loss=0.151930 numRight=128
-I/TransferCL(11481): loss=0.149818 numRight=128
-I/TransferCL(11481): loss=0.147768 numRight=128
-I/TransferCL(11481): loss=0.145778 numRight=128
-I/TransferCL(11481): loss=0.143844 numRight=128
-I/TransferCL(11481): loss=0.141966 numRight=128
-I/TransferCL(11481): loss=0.140139 numRight=128
-I/TransferCL(11481): loss=0.138362 numRight=128
-I/TransferCL(11481): loss=0.136634 numRight=128
-I/TransferCL(11481): loss=0.134952 numRight=128
-I/TransferCL(11481): loss=0.133313 numRight=128
-I/TransferCL(11481): loss=0.131717 numRight=128
-I/TransferCL(11481): loss=0.130161 numRight=128
-I/TransferCL(11481): loss=0.128645 numRight=128
-I/TransferCL(11481): loss=0.127166 numRight=128
-I/TransferCL(11481): loss=0.125724 numRight=128
-I/TransferCL(11481): loss=0.124316 numRight=128
-I/TransferCL(11481): loss=0.122942 numRight=128
-I/TransferCL(11481): loss=0.121600 numRight=128
-I/TransferCL(11481): loss=0.120290 numRight=128
-I/TransferCL(11481): loss=0.119010 numRight=128
-I/TransferCL(11481): loss=0.117759 numRight=128
-I/TransferCL(11481): loss=0.116535 numRight=128
-I/TransferCL(11481): loss=0.115339 numRight=128
-I/TransferCL(11481): loss=0.114169 numRight=128
-I/TransferCL(11481): loss=0.113024 numRight=128
-I/TransferCL(11481): loss=0.111905 numRight=128
-I/TransferCL(11481): loss=0.110808 numRight=128
-I/TransferCL(11481): loss=0.109735 numRight=128
-I/TransferCL(11481): loss=0.108684 numRight=128
-I/TransferCL(11481): loss=0.107654 numRight=128
-I/TransferCL(11481): loss=0.106646 numRight=128
-I/TransferCL(11481): loss=0.105658 numRight=128
-I/TransferCL(11481): loss=0.104689 numRight=128
-I/TransferCL(11481): gettimeofday 3723.000000
-I/TransferCL(11481):  ms
-I/TransferCL(11481): -----------End of ther training: Delete object
-I/TransferCL(11481): -----------Delete weightsInitializer
-I/TransferCL(11481): -----------Delete trainer
-I/TransferCL(11481): -----------Delete netLearner
-I/TransferCL(11481): -----------Delete net
-I/TransferCL(11481): -----------Delete trainLoader
-I/TransferCL(11481): finish
-I/TransferCL(11481): finish1
-I/TransferCL(11481): All code took 3797.000000
-I/TransferCL(11481):  ms
-I/TransferCL(11481): easyCL oject destroyed
-I/TransferCL(11481): 3)time 3.834609
-I/TransferCL(11481):
-I/TransferCL(11481): 3834.000000
-I/TransferCL(11481):  ms
+I/TransferCL(10924): ################################################
+I/TransferCL(10924): ###################Training#####################
+I/TransferCL(10924): ################################################
+I/TransferCL(10924): ------- Loading configuration: training set 128 images with 1 channel and an image size of 28 X 28
+I/TransferCL(10924): ------- Network Generation: 1s8c5z-relu-mp2-1s16c5z-relu-mp3-152n-tanh-10n
+I/TransferCL(10924): -----------Define Weights Initialization Method
+I/TransferCL(10924): -------------- Chosen Initializer: original
+I/TransferCL(10924): -----------Network Layer Generation
+I/TransferCL(10924): -----------Selecting Training method (sgd)
+I/TransferCL(10924): -----------Loading the weights (the othe weights are radomly initialized with the initializer defined previously)
+I/TransferCL(10924): -----------Set up Trainer
+I/TransferCL(10924):
+I/TransferCL(10924):
+I/TransferCL(10924): ################################################
+I/TransferCL(10924): ################Start learning##################
+I/TransferCL(10924): ################################################
+I/TransferCL(10924):
+I/TransferCL(10924):
+I/TransferCL(10924): loss=340.038452 numRight=16
+I/TransferCL(10924): loss=275.497894 numRight=28
+I/TransferCL(10924): loss=250.139160 numRight=45
+I/TransferCL(10924): loss=231.197174 numRight=60
+I/TransferCL(10924): loss=215.234680 numRight=71
+I/TransferCL(10924): loss=201.223007 numRight=80
+I/TransferCL(10924): loss=188.762817 numRight=87
+I/TransferCL(10924): loss=177.619720 numRight=92
+I/TransferCL(10924): loss=167.614990 numRight=97
+I/TransferCL(10924): loss=158.600357 numRight=105
+I/TransferCL(10924): loss=150.450089 numRight=108
+I/TransferCL(10924): loss=143.057266 numRight=109
+I/TransferCL(10924): loss=136.329941 numRight=111
+I/TransferCL(10924): loss=130.189621 numRight=113
+I/TransferCL(10924): loss=124.568176 numRight=114
+I/TransferCL(10924): loss=119.406982 numRight=114
+I/TransferCL(10924): loss=114.655197 numRight=116
+I/TransferCL(10924): loss=110.268494 numRight=117
+I/TransferCL(10924): loss=106.208397 numRight=118
+I/TransferCL(10924): loss=102.441200 numRight=118
+I/TransferCL(10924): loss=98.937355 numRight=118
+I/TransferCL(10924): loss=95.670959 numRight=118
+I/TransferCL(10924): loss=92.619194 numRight=119
+I/TransferCL(10924): loss=89.761833 numRight=119
+I/TransferCL(10924): loss=87.081139 numRight=119
+I/TransferCL(10924): loss=84.561211 numRight=119
+I/TransferCL(10924): loss=82.188004 numRight=119
+I/TransferCL(10924): loss=79.949051 numRight=119
+I/TransferCL(10924): loss=77.833115 numRight=119
+I/TransferCL(10924): loss=75.830170 numRight=120
+I/TransferCL(10924): loss=73.931221 numRight=121
+I/TransferCL(10924): loss=72.128242 numRight=121
+I/TransferCL(10924): loss=70.413902 numRight=122
+I/TransferCL(10924): loss=68.781647 numRight=122
+I/TransferCL(10924): loss=67.225548 numRight=122
+I/TransferCL(10924): loss=65.740196 numRight=122
+I/TransferCL(10924): loss=64.320671 numRight=122
+I/TransferCL(10924): loss=62.962559 numRight=122
+I/TransferCL(10924): loss=61.661789 numRight=122
+I/TransferCL(10924): loss=60.414635 numRight=122
+I/TransferCL(10924): loss=59.217720 numRight=123
+I/TransferCL(10924): loss=58.067921 numRight=123
+I/TransferCL(10924): loss=56.962376 numRight=123
+I/TransferCL(10924): loss=55.898487 numRight=123
+I/TransferCL(10924): loss=54.873783 numRight=123
+I/TransferCL(10924): loss=53.886082 numRight=123
+I/TransferCL(10924): loss=52.933289 numRight=123
+I/TransferCL(10924): loss=52.013527 numRight=123
+I/TransferCL(10924): loss=51.125000 numRight=123
+I/TransferCL(10924): loss=50.266037 numRight=123
+I/TransferCL(10924): loss=49.435169 numRight=123
+I/TransferCL(10924): loss=48.630978 numRight=123
+I/TransferCL(10924): loss=47.852093 numRight=124
+I/TransferCL(10924): loss=47.097301 numRight=124
+I/TransferCL(10924): loss=46.365482 numRight=124
+I/TransferCL(10924): loss=45.655514 numRight=124
+I/TransferCL(10924): loss=44.966412 numRight=124
+I/TransferCL(10924): loss=44.297222 numRight=124
+I/TransferCL(10924): loss=43.647057 numRight=124
+I/TransferCL(10924): loss=43.015118 numRight=124
+I/TransferCL(10924): loss=42.400551 numRight=124
+I/TransferCL(10924): loss=41.802689 numRight=124
+I/TransferCL(10924): loss=41.220783 numRight=124
+I/TransferCL(10924): loss=40.654228 numRight=124
+I/TransferCL(10924): loss=40.102375 numRight=124
+I/TransferCL(10924): loss=39.564655 numRight=124
+I/TransferCL(10924): loss=39.040504 numRight=124
+I/TransferCL(10924): loss=38.529396 numRight=124
+I/TransferCL(10924): loss=38.030872 numRight=124
+I/TransferCL(10924): loss=37.544403 numRight=124
+I/TransferCL(10924): loss=37.069607 numRight=124
+I/TransferCL(10924): loss=36.606026 numRight=124
+I/TransferCL(10924): loss=36.153259 numRight=124
+I/TransferCL(10924): loss=35.710938 numRight=124
+I/TransferCL(10924): loss=35.278702 numRight=124
+I/TransferCL(10924): loss=34.856178 numRight=124
+I/TransferCL(10924): loss=34.443069 numRight=124
+I/TransferCL(10924): loss=34.039047 numRight=124
+I/TransferCL(10924): loss=33.643822 numRight=125
+I/TransferCL(10924): loss=33.257088 numRight=125
+I/TransferCL(10924): loss=32.878590 numRight=125
+I/TransferCL(10924): loss=32.508057 numRight=125
+I/TransferCL(10924): loss=32.145245 numRight=125
+I/TransferCL(10924): loss=31.789917 numRight=125
+I/TransferCL(10924): loss=31.441833 numRight=125
+I/TransferCL(10924): loss=31.100786 numRight=125
+I/TransferCL(10924): loss=30.766573 numRight=125
+I/TransferCL(10924): loss=30.438965 numRight=125
+I/TransferCL(10924): loss=30.117785 numRight=125
+I/TransferCL(10924): loss=29.802849 numRight=125
+I/TransferCL(10924): loss=29.493982 numRight=125
+I/TransferCL(10924): loss=29.191004 numRight=125
+I/TransferCL(10924): loss=28.893751 numRight=125
+I/TransferCL(10924): loss=28.602062 numRight=125
+I/TransferCL(10924): loss=28.315805 numRight=125
+I/TransferCL(10924): loss=28.034807 numRight=125
+I/TransferCL(10924): loss=27.758936 numRight=125
+I/TransferCL(10924): loss=27.488062 numRight=125
+I/TransferCL(10924): loss=27.222054 numRight=125
+I/TransferCL(10924): loss=26.960766 numRight=126
+I/TransferCL(10924): loss=26.704094 numRight=126
+I/TransferCL(10924): loss=26.451908 numRight=126
+I/TransferCL(10924): loss=26.204117 numRight=127
+I/TransferCL(10924): loss=25.960588 numRight=127
+I/TransferCL(10924): loss=25.721230 numRight=128
+I/TransferCL(10924): loss=25.485914 numRight=128
+I/TransferCL(10924): loss=25.254572 numRight=128
+I/TransferCL(10924): loss=25.027102 numRight=128
+I/TransferCL(10924): loss=24.803392 numRight=128
+I/TransferCL(10924): loss=24.583364 numRight=128
+I/TransferCL(10924): loss=24.366938 numRight=128
+I/TransferCL(10924): loss=24.154015 numRight=128
+I/TransferCL(10924): loss=23.944517 numRight=128
+I/TransferCL(10924): loss=23.738382 numRight=128
+I/TransferCL(10924): loss=23.535511 numRight=128
+I/TransferCL(10924): loss=23.335838 numRight=128
+I/TransferCL(10924): loss=23.139290 numRight=128
+I/TransferCL(10924): loss=22.945807 numRight=128
+I/TransferCL(10924): loss=22.755301 numRight=128
+I/TransferCL(10924): loss=22.567717 numRight=128
+I/TransferCL(10924): loss=22.382999 numRight=128
+I/TransferCL(10924): loss=22.201069 numRight=128
+I/TransferCL(10924): loss=22.021870 numRight=128
+I/TransferCL(10924): loss=21.845362 numRight=128
+I/TransferCL(10924): loss=21.671467 numRight=128
+I/TransferCL(10924): loss=21.500137 numRight=128
+I/TransferCL(10924): loss=21.331320 numRight=128
+I/TransferCL(10924): loss=21.164948 numRight=128
+I/TransferCL(10924): loss=21.000994 numRight=128
+I/TransferCL(10924): loss=20.839394 numRight=128
+I/TransferCL(10924): loss=20.680103 numRight=128
+I/TransferCL(10924): loss=20.523073 numRight=128
+I/TransferCL(10924): loss=20.368263 numRight=128
+I/TransferCL(10924): loss=20.215612 numRight=128
+I/TransferCL(10924): loss=20.065100 numRight=128
+I/TransferCL(10924): loss=19.916662 numRight=128
+I/TransferCL(10924): loss=19.770279 numRight=128
+I/TransferCL(10924): loss=19.625898 numRight=128
+I/TransferCL(10924): loss=19.483482 numRight=128
+I/TransferCL(10924): loss=19.342997 numRight=128
+I/TransferCL(10924): loss=19.204390 numRight=128
+I/TransferCL(10924): loss=19.067646 numRight=128
+I/TransferCL(10924): loss=18.932722 numRight=128
+I/TransferCL(10924): loss=18.799574 numRight=128
+I/TransferCL(10924): loss=18.668186 numRight=128
+I/TransferCL(10924): loss=18.538515 numRight=128
+I/TransferCL(10924): loss=18.410522 numRight=128
+I/TransferCL(10924): loss=18.284184 numRight=128
+I/TransferCL(10924): loss=18.159477 numRight=128
+I/TransferCL(10924): loss=18.036362 numRight=128
+I/TransferCL(10924): loss=17.914803 numRight=128
+I/TransferCL(10924): loss=17.794794 numRight=128
+I/TransferCL(10924): loss=17.676283 numRight=128
+I/TransferCL(10924): loss=17.559261 numRight=128
+I/TransferCL(10924): loss=17.443693 numRight=128
+I/TransferCL(10924): loss=17.329556 numRight=128
+I/TransferCL(10924): loss=17.216822 numRight=128
+I/TransferCL(10924): loss=17.105467 numRight=128
+I/TransferCL(10924): loss=16.995462 numRight=128
+I/TransferCL(10924): loss=16.886803 numRight=128
+I/TransferCL(10924): loss=16.779446 numRight=128
+I/TransferCL(10924): loss=16.673370 numRight=128
+I/TransferCL(10924): loss=16.568565 numRight=128
+I/TransferCL(10924): loss=16.465002 numRight=128
+I/TransferCL(10924): loss=16.362663 numRight=128
+I/TransferCL(10924): loss=16.261522 numRight=128
+I/TransferCL(10924): loss=16.161564 numRight=128
+I/TransferCL(10924): loss=16.062769 numRight=128
+I/TransferCL(10924): loss=15.965113 numRight=128
+I/TransferCL(10924): loss=15.868578 numRight=128
+I/TransferCL(10924): loss=15.773150 numRight=128
+I/TransferCL(10924): loss=15.678812 numRight=128
+I/TransferCL(10924): loss=15.585545 numRight=128
+I/TransferCL(10924): loss=15.493321 numRight=128
+I/TransferCL(10924): loss=15.402135 numRight=128
+I/TransferCL(10924): loss=15.311967 numRight=128
+I/TransferCL(10924): loss=15.222803 numRight=128
+I/TransferCL(10924): loss=15.134621 numRight=128
+I/TransferCL(10924): loss=15.047411 numRight=128
+I/TransferCL(10924): loss=14.961153 numRight=128
+I/TransferCL(10924): loss=14.875841 numRight=128
+I/TransferCL(10924): loss=14.791453 numRight=128
+I/TransferCL(10924): loss=14.707974 numRight=128
+I/TransferCL(10924): loss=14.625394 numRight=128
+I/TransferCL(10924): loss=14.543686 numRight=128
+I/TransferCL(10924): loss=14.462858 numRight=128
+I/TransferCL(10924): loss=14.382881 numRight=128
+I/TransferCL(10924): loss=14.303750 numRight=128
+I/TransferCL(10924): loss=14.225451 numRight=128
+I/TransferCL(10924): loss=14.147968 numRight=128
+I/TransferCL(10924): loss=14.071287 numRight=128
+I/TransferCL(10924): loss=13.995400 numRight=128
+I/TransferCL(10924): loss=13.920297 numRight=128
+I/TransferCL(10924): loss=13.845965 numRight=128
+I/TransferCL(10924): loss=13.772382 numRight=128
+I/TransferCL(10924): loss=13.699554 numRight=128
+I/TransferCL(10924): loss=13.627465 numRight=128
+I/TransferCL(10924): loss=13.556102 numRight=128
+I/TransferCL(10924): loss=13.485450 numRight=128
+I/TransferCL(10924): loss=13.415505 numRight=128
+I/TransferCL(10924): gettimeofday 8387.000000
+I/TransferCL(10924):  ms
+I/TransferCL(10924): -----------End of ther training: Delete object
+I/TransferCL(10924): -----------Delete weightsInitializer
+I/TransferCL(10924): -----------Delete trainer
+I/TransferCL(10924): -----------Delete netLearner
+I/TransferCL(10924): -----------Delete net
+I/TransferCL(10924): -----------Delete trainLoader
+I/TransferCL(10924): All code took 8451.000000
+I/TransferCL(10924):  ms
+I/TransferCL(10924): easyCL oject destroyed
+I/TransferCL(10924): 3)time 8.484612
+I/TransferCL(10924):
+I/TransferCL(10924): 8484.000000
+I/TransferCL(10924):  ms
 ```
 
-
-
-* For example, the output of ```prediction(String path)``` should look like that.
+* For example, the output of ```prediction(String path, String cmdPrediction);``` should look like that.
 
 ```
-I/TransferCL(11481): ################################################
-I/TransferCL(11481): ###################Prediction###################
-I/TransferCL(11481): ################################################
-I/TransferCL(11481): ------- Network Generation
-I/TransferCL(11481): -----------Network Layers Creation 1s8c5z-relu-mp2-1s16c5z-relu-mp3-152n-tanh-10n
-I/TransferCL(11481): -----------Loading the weights
-I/TransferCL(11481): -----------Start prediction
-I/TransferCL(11481): --------- Prediction: done (prediction in /data/data/com.sony.openclexample1/preloadingData/pred2.txt)
-I/TransferCL(11481): --------- End of ther prediction: Delete objects
-I/TransferCL(11481): easyCL oject destroyed
+I/TransferCL(14885): ################################################
+I/TransferCL(14885): ###################Prediction###################
+I/TransferCL(14885): ################################################
+I/TransferCL(14885): ------- Network Generation
+I/TransferCL(14885): -----------Network Layers Creation 1s8c5z-relu-mp2-1s16c5z-relu-mp3-152n-tanh-10n
+I/TransferCL(14885): -----------Loading the weights
+I/TransferCL(14885): -----------Start prediction
+I/TransferCL(14885): --------- Prediction: done (prediction in /data/data/com.sony.openclexample1/preloadingData/pred2.txt)
+I/TransferCL(14885): --------- End of ther prediction: Delete objects
+I/TransferCL(14885): easyCL oject destroyed
 ```
-
 
 ## 8. To get in contact
 

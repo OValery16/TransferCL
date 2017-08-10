@@ -1,12 +1,17 @@
-// Copyright Olivier Valery 2017 olivier.valery92 at gmail.com
-// this work is based on DeepCL: a project of Hugh Perkins hughperkins at gmail
+// Copyright Hugh Perkins 2015 hughperkins at gmail
 //
 // This Source Code Form is subject to the terms of the Mozilla Public License, 
 // v. 2.0. If a copy of the MPL was not distributed with this file, You can 
 // obtain one at http://mozilla.org/MPL/2.0/.
 
-#include "../TransferCL/src/TransferCL.h"
 
+//#include <iostream>
+//#include <algorithm>
+
+#include "../TransferCL/src/TransferCL.h"
+//#include "test/Sampler.h"  // TODO: REMOVE THIS
+//#include "../DeepCL/src/clblas/ClBlasInstance.h"
+//#include "../sonyOpenCLexample1.h"
 #include "train.h"
 
 
@@ -504,6 +509,7 @@ int TrainModel::prepareConfig(int parameterNb, char *argList[],string absolutePa
     if(parameterNb == 2 && (string(argList[1]) == "--help" || string(argList[1]) == "--?" || string(argList[1]) == "-?" || string(argList[1]) == "-h")) {
         printUsage(argList, config);
     }
+    LOGI ("1");
     for(int i = 1; i < parameterNb; i++) {
         vector<string> splitkeyval = split(argList[i], "=");
         if(splitkeyval.size() != 2) {
@@ -598,7 +604,7 @@ int TrainModel::prepareConfig(int parameterNb, char *argList[],string absolutePa
 
     //when using sdcard this method make it crash string dataset = toLower(config.dataset);
 
-    //LOGI ("dataset %s",config.dataset.c_str());
+    LOGI ("dataset %s",config.dataset.c_str());
     if(config.dataset != "") {
         if(config.dataset == "mnist") {
         	LOGI ("mnist");
@@ -634,18 +640,18 @@ int TrainModel::prepareConfig(int parameterNb, char *argList[],string absolutePa
         s1 << "   datadir: " << config.dataDir << ":\n";
         s1 << "   trainfile: " << config.trainFile << ":\n";
         s1 << "   validatefile: " << config.validateFile << ":\n";
-        //LOGI("%s",s1.str().c_str());
+        LOGI("%s",s1.str().c_str());
     }
     try {
-
+    	LOGI ("3");
         go(config);
-
+        LOGI ("finish");
 
     } catch(runtime_error e) {
         cout << "Something went wrong: " << e.what() << endl;
         return -1;
     }
-
+    LOGI ("finish1");
     return 1;
 }
 
