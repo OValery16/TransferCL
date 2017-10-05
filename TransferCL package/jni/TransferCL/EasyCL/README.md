@@ -6,7 +6,7 @@ For more information, please check our paper:
 		author	= {Olivier Valery and
                Pangfeng Liu and
                Jan{-}Jan Wu},
-		booktitle={2017 IEEE 22nd International Conference on Parallel and Distributed Systems (ICPADS)}, 
+		booktitle={2017 IEEE 23nd International Conference on Parallel and Distributed Systems (ICPADS)}, 
 		Title = {CPU/GPU Collaboration Techniques for Transfer Learning on Mobile Devices.},
 		Year = {2017}
     }
